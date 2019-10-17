@@ -45,14 +45,18 @@ color: red;
 
 
 const UserForm = ({ values, touched, errors, status }) => {
+
     const [users, setUsers] = useState([]);
+/* ------------------------------ */
     useEffect(() => {
       status && setUsers(users => [...users, status]);
     }, [status]);
+/* ------------------------------ */
     return (
       <div>
         <MyForm> 
             <Title> Form</Title>
+
           <FormField type="text" name="name" placeholder="Name" />
           {touched.name && errors.name && <Error>{errors.name}</Error>}
 
@@ -76,9 +80,9 @@ const UserForm = ({ values, touched, errors, status }) => {
         </MyForm>
         {users.map(user => (
           <ul key={user.id}>
-            <li>Name: {user.name}</li>
-            <li>Email: {user.email}</li>
-            <li>Password: {user.password}</li>
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+            <p>Password: {user.password}</p>
 
           </ul>
         ))}

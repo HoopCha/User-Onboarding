@@ -2,39 +2,78 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import styled from "styled-components";
+
+
+const MyForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  margin: 50px auto;
+  padding: 25px;
+  width: 25%;
+  background: #F7EF99;
+`;
+
+const Button = styled.button`
+  width: 200px;
+  height: 35px;
+  background-color: #F78E69;
+  color: #fff;
+  border-radius: 3px;
+`;
+
+const FormField =styled(Field)`
+    padding: 10px;
+    margin: 10px;
+`
+
+const FormLabel =styled.label`
+    padding: 10px;
+    margin: 10px;
+`
+
+const Title =styled.h1`
+    padding: 1px;
+    margin: 1px;
+    color: #5D675B
+`
+const Error =styled.p`
+color: red;
+`
+
 
 const UserForm = ({ values, touched, errors, status }) => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
       status && setUsers(users => [...users, status]);
     }, [status]);
-
     return (
       <div>
-        <Form>
-          <Field type="text" name="name" placeholder="Name" />
-          {touched.name && errors.name && <p>{errors.name}</p>}
+        <MyForm> 
+            <Title> Form</Title>
+          <FormField type="text" name="name" placeholder="Name" />
+          {touched.name && errors.name && <Error>{errors.name}</Error>}
 
-          <Field type="text" name="email" placeholder="Email" />
-          {touched.email && errors.email && <p>{errors.email}</p>}
+          <FormField type="text" name="email" placeholder="Email" />
+          {touched.email && errors.email && <Error>{errors.email}</Error>}
 
-          <Field type="password" name="password" placeholder="Password" />
-          {touched.password && errors.password && <p>{errors.password}</p>}
+          <FormField type="password" name="password" placeholder="Password" />
+          {touched.password && errors.password && <Error>{errors.password}</Error>}
 
-          <label>
-          {touched.tos && errors.tos && <p>{errors.tos}</p>} 
+          <FormLabel>
             Agree to Terms of Service
-            <Field
+            <FormField
               type="checkbox"
               name="tos"
               checked={values.tos}
             />
-            <span className="checkmark" />
-          </label>
+            {touched.tos && errors.tos && <Error>{errors.tos}</Error>} 
+          </FormLabel>
 
-          <button type="submit">Submit</button>
-
-        </Form>
+          <Button type="submit">Submit</Button>
+        </MyForm>
         {users.map(user => (
           <ul key={user.id}>
             <li>Name: {user.name}</li>
